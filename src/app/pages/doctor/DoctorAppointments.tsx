@@ -569,7 +569,7 @@ type Appointment = {
   date: string;
   time: string;
   reason: string;
-  ownerId: string;
+  ownerId?: string;
   ownerName?: string;
   ownerContact?: string;
   status: string;
@@ -638,18 +638,18 @@ export default function DoctorAppointments() {
     }
   };
 
-const fetchMedicalHistory = async () => {
-  try {
-    const response = await fetch(`${API_URL}/medical-records`);
-    if (!response.ok) throw new Error('Failed to fetch medical records');
-    const data = await response.json();
-    
-    // Show ALL medical records - no doctor ID filter
-    setMedicalHistory(data);
-  } catch (error) {
-    console.error('Error fetching medical history:', error);
-  }
-};
+  const fetchMedicalHistory = async () => {
+    try {
+      const response = await fetch(`${API_URL}/medical-records`);
+      if (!response.ok) throw new Error('Failed to fetch medical records');
+      const data = await response.json();
+      
+      // Show ALL medical records - no doctor ID filter
+      setMedicalHistory(data);
+    } catch (error) {
+      console.error('Error fetching medical history:', error);
+    }
+  };
 
   const handlePrescribe = (appt: Appointment) => {
     setPrescribeAppt(appt);
@@ -668,9 +668,8 @@ const fetchMedicalHistory = async () => {
     setSaving(true);
 
     try {
-      // 1. Create medical record
-      const medicalRecord: MedicalRecord = {
-        _id: "",
+      // Create medical record matching the working demo structure
+      const medicalRecord = {
         petId: prescribeAppt.petId,
         petName: prescribeAppt.petName,
         doctorId: prescribeAppt.doctorId,
@@ -682,9 +681,10 @@ const fetchMedicalHistory = async () => {
         prescription: prescription,
         notes: notes || "No additional notes",
         type: prescribeAppt.type,
-        ownerId: prescribeAppt.ownerId,
-        ownerContact: prescribeAppt.ownerContact
+        ownerId: "user_001" // Using default ownerId as specified
       };
+
+      console.log("Saving medical record:", medicalRecord);
 
       // Save medical record to database
       const medicalResponse = await fetch(`${API_URL}/medical-records`, {
@@ -695,7 +695,10 @@ const fetchMedicalHistory = async () => {
         body: JSON.stringify(medicalRecord)
       });
 
-      if (!medicalResponse.ok) throw new Error('Failed to save medical record');
+      if (!medicalResponse.ok) {
+        const errorData = await medicalResponse.json();
+        throw new Error(errorData.error || 'Failed to save medical record');
+      }
 
       // 2. Update appointment status to "Visited"
       const updateResponse = await fetch(`${API_URL}/appointments/${prescribeAppt._id}`, {
@@ -706,7 +709,9 @@ const fetchMedicalHistory = async () => {
         body: JSON.stringify({ status: "Visited" })
       });
 
-      if (!updateResponse.ok) throw new Error('Failed to update appointment status');
+      if (!updateResponse.ok) {
+        throw new Error('Failed to update appointment status');
+      }
 
       // 3. Update local state
       setSavedPrescriptions((prev) => ({ 
@@ -730,7 +735,7 @@ const fetchMedicalHistory = async () => {
 
     } catch (error) {
       console.error('Error saving prescription:', error);
-      alert('Failed to save prescription. Please try again.');
+      alert(`Failed to save prescription: ${error.message}`);
     } finally {
       setSaving(false);
     }
@@ -799,7 +804,7 @@ const fetchMedicalHistory = async () => {
                 <th className="pb-3 pr-4">Type</th>
                 <th className="pb-3 pr-4">Status</th>
                 <th className="pb-3">Action</th>
-               </tr>
+              </tr>
             </thead>
             <tbody className="divide-y divide-gray-50">
               {filteredAppointments.map((appt) => (
@@ -874,7 +879,7 @@ const fetchMedicalHistory = async () => {
                 <th className="pb-3 pr-4">Owner Contact</th>
                 <th className="pb-3 pr-4">Diagnosis</th>
                 <th className="pb-3">Action</th>
-               </tr>
+              </tr>
             </thead>
             <tbody className="divide-y divide-gray-50">
               {filteredHistory.map((record) => (

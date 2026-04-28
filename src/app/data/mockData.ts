@@ -14,7 +14,7 @@ export const USERS = [
   },
   {
     _id: "user_002",
-    name: "PawsCity Clinic",
+    name: "Dhaka Pet Clinic",
     email: "clinic@petcare.com",
     password: "clinic123@KL",
     role: "clinic",
