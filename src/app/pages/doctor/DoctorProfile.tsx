@@ -67,7 +67,7 @@ export default function DoctorProfile() {
   const [downloading, setDownloading] = useState<string | null>(null);
 
   const API_URL = 'https://pet-care-server-one.vercel.app';
-  const DOCTOR_ID = "doc_001";
+  const DOCTOR_ID = "69ece309c34e8bfcaadbde22";
 
   useEffect(() => {
     fetchDoctorData();

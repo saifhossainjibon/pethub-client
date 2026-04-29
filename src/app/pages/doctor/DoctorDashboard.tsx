@@ -217,7 +217,7 @@ export default function DoctorDashboard() {
         <div className="flex-1">
           <h1 className="text-2xl font-bold text-gray-900">{doctor.name}</h1>
           <p className="text-gray-500">{doctor.specialties?.join(", ")}</p>
-          <p className="text-sm text-gray-400 mt-1">{doctor.clinicName}</p>
+          <p className="text-sm text-gray-400 mt-1">Dhaka Pet Clinic</p>
           <div className="flex flex-wrap gap-2 mt-2">
             {doctor.specialties?.map((s) => (
               <span key={s} className="bg-purple-50 text-purple-600 text-xs font-medium px-2.5 py-1 rounded-full">{s}</span>

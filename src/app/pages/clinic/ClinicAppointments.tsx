@@ -477,7 +477,7 @@ export default function ClinicAppointments() {
               <tr className="text-left text-xs font-medium text-gray-500 uppercase tracking-wide border-b border-gray-100">
                 <th className="pb-3 pr-4">Pet ID</th>
                 <th className="pb-3 pr-4">Pet Name</th>
-                <th className="pb-3 pr-4">Owner Contact</th>
+                {/* <th className="pb-3 pr-4">Owner Contact</th>  */}
                 <th className="pb-3 pr-4">Doctor</th>
                 <th className="pb-3 pr-4">Time</th>
                 <th className="pb-3">Actions</th>
@@ -488,8 +488,8 @@ export default function ClinicAppointments() {
                 <tr key={appt._id} className="hover:bg-gray-50 transition">
                   <td className="py-4 pr-4 text-xs font-mono text-gray-500">{appt.petId}</td>
                   <td className="py-4 pr-4 text-sm font-medium text-gray-900">{appt.petName}</td>
-                  <td className="py-4 pr-4 text-sm text-gray-600">{appt.ownerContact || 'N/A'}</td>
-                  <td className="py-4 pr-4 text-sm text-gray-600">{appt.doctorName}</td>
+                  {/* <td className="py-4 pr-4 text-sm text-gray-600">{appt.ownerContact || 'N/A'}</td> */}
+                  <td className="py-4 pr-4 text-sm text-gray-600">Dr. {appt.doctorName}</td>
                   <td className="py-4 pr-4 text-sm text-gray-600">{appt.time}</td>
                   <td className="py-4">
                     {appt.status === "Pending" ? (
@@ -567,7 +567,7 @@ export default function ClinicAppointments() {
               <tr className="text-left text-xs font-medium text-gray-500 uppercase tracking-wide border-b border-gray-100">
                 <th className="pb-3 pr-4">Date</th>
                 <th className="pb-3 pr-4">Pet</th>
-                <th className="pb-3 pr-4">Owner</th>
+                {/* <th className="pb-3 pr-4">Owner</th> */}
                 <th className="pb-3 pr-4">Doctor</th>
                 <th className="pb-3 pr-4">Type</th>
                 <th className="pb-3">Status</th>
@@ -578,8 +578,8 @@ export default function ClinicAppointments() {
                 <tr key={appt._id} className="hover:bg-gray-50 transition">
                   <td className="py-4 pr-4 text-sm text-gray-600">{appt.date}</td>
                   <td className="py-4 pr-4 text-sm font-medium text-gray-900">{appt.petName}</td>
-                  <td className="py-4 pr-4 text-sm text-gray-600">{appt.ownerName || 'N/A'}</td>
-                  <td className="py-4 pr-4 text-sm text-gray-600">{appt.doctorName}</td>
+                  {/* <td className="py-4 pr-4 text-sm text-gray-600">{appt.ownerName || 'N/A'}</td> */}
+                  <td className="py-4 pr-4 text-sm text-gray-600">Dr. {appt.doctorName}</td>
                   <td className="py-4 pr-4">
                     <span className="text-xs bg-blue-50 text-blue-600 px-2 py-0.5 rounded-full">{appt.type}</span>
                   </td>
